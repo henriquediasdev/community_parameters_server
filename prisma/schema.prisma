@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Printer {
+   id Int @id @default(autoincrement())
+   type String
+   brand String
+   model String
+   picture String
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model Consumable {
+  id Int @id @default(autoincrement())
+  type String // filament, resin, etc.
+  material String? // PETG, ABS, PLA, etc.
+  brand String
+  model String
+  color String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  printerId Int 
+  consumableId Int
+  profileFilamentId ProfileFilament?
+  profileResinId ProfileResin?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProfileFilament {
+  id Int @id @default(autoincrement())
+  profileId Int @unique
+  profile Profile @relation(fields: [profileId], references: [id])
+  plateType String // PEI, Cool, etc.
+  bedTemperature Int // in degrees Celsius
+  nozzleTemperature Int // in degrees Celsius
+  maxVolumetricSpeed Float? // in mm/s
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProfileResin {
+  id Int @id @default(autoincrement())
+  profileId Int @unique
+  profile Profile @relation(fields: [profileId], references: [id])
+  layerHeight Float // in mm
+  bottomLayerCount Int
+  bottomExposureTime Int // in seconds
+  exposureTime Int // in seconds
+  transitionLayerCount Int
+  restTimeAfterRetract Int? // in seconds
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
