@@ -6,6 +6,12 @@
 # testing
 /coverage
 
+# prisma
+/prisma/migrations
+
+# graphql
+src/schema.gql
+
 # production
 /build
 /dist
