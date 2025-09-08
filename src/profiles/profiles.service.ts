@@ -54,10 +54,10 @@ export class ProfilesService {
         printerId: data.printerId,
         consumableId: data.consumableId,
         profileFilament: data.profileFilament ? {
-          create: data.profileFilament
+          update: data.profileFilament
         } : undefined,
         profileResin: data.profileResin ? {
-          create: data.profileResin
+          update: data.profileResin
         } : undefined,
       },
       include: {
