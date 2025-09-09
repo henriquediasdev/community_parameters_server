@@ -1,8 +1,10 @@
-import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { ProfilesService } from './profiles.service';
 import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
+import { ProfileFilament } from './entities/profile-filament.entity';
+import { ProfileResin } from './entities/profile-resin.entity';
 
 @Resolver(() => Profile)
 export class ProfilesResolver {
@@ -31,5 +33,15 @@ export class ProfilesResolver {
   @Mutation(() => Profile, { nullable: true })
   async removeProfile(@Args('id', { type: () => ID }) id: string) {
     return await this.profilesService.remove(id);
+  }
+
+  @ResolveField('profileFilament', () => ProfileFilament)
+  async profileFilament(@Parent() profile: Profile) {
+    return this.profilesService.profileFilament(profile.id)
+  }
+  
+  @ResolveField('profileResin', () => ProfileResin)
+  async profileResin(@Parent() profile: Profile) {
+    return this.profilesService.profileResin(profile.id)
   }
 }

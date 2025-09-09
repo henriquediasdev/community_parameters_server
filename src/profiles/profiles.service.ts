@@ -19,30 +19,18 @@ export class ProfilesService {
           create: data.profileResin
         } : undefined,
       },
-      include: {
-        profileFilament: true,
-        profileResin: true,
-      }
     })
     return profile;
   }
 
   async findAll() {
-    const profiles = await this.prismaService.profile.findMany({
-      include: {
-        profileFilament: true,
-        profileResin: true,
-      }
-    });
+    const profiles = await this.prismaService.profile.findMany({});
     return profiles;
   }
 
   async findOne(id: string) {
     const profile = await this.prismaService.profile.findUnique({
-      where: { id }, include: {
-        profileFilament: true,
-        profileResin: true,
-      }
+      where: { id },
     });
     return profile;
   }
@@ -60,11 +48,6 @@ export class ProfilesService {
           update: data.profileResin
         } : undefined,
       },
-      include: {
-        profileFilament: true,
-        profileResin: true,
-      }
-
     });
     return profile;
   }
@@ -72,5 +55,15 @@ export class ProfilesService {
   async remove(id: string) {
     const profile = await this.prismaService.profile.delete({ where: { id } }); // Cascade
     return profile;
+  }
+
+  // for resolvefield
+  async profileFilament(profileId: string) {
+    return await this.prismaService.profileFilament.findUnique({ where: { profileId } });
+  }
+
+  // for resolvefield
+  async profileResin(profileId: string) {
+    return await this.prismaService.profileResin.findUnique({ where: { profileId } });
   }
 }
