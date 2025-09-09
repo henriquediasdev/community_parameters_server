@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateConsumableInput } from './dto/create-consumable.input';
 import { UpdateConsumableInput } from './dto/update-consumable.input';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ConsumablesService {

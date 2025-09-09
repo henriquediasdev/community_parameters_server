@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePrinterInput } from './dto/create-printer.input';
 import { UpdatePrinterInput } from './dto/update-printer.input';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class PrintersService {
