@@ -8,7 +8,6 @@ export class PrintersService {
   constructor(private readonly prismaService: PrismaService) { }
 
   async create(data: CreatePrinterInput) {
-    console.log({data});
     const printer = await this.prismaService.printer.create({ data })
     return printer;
   }
